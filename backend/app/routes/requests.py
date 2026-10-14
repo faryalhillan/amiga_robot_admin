@@ -152,6 +152,88 @@ async def upload_invoice(
     return req
 
 
+@router.post("/{request_id}/approve", status_code=status.HTTP_200_OK)
+async def approve_request(
+    request_id: uuid.UUID,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(require_role("FINANCE_REVIEWER")),
+):
+    """
+    Approve a request for Finance Reviewer.
+    
+    Transitions request from READY_FOR_REVIEW to AMIGA_REVIEWED.
+    Enforces segregation of duties (user cannot approve their own upload).
+    Requires active client assignment for the request's client.
+    
+    Requirements: 12.1, 12.2, 12.3, 12.4, 12.5
+    """
+    # ── Load request ──────────────────────────────────────────────────────────
+    req = await request_repository.get_by_id(db, request_id)
+    if req is None:
+        raise HTTPException(404, "Request not found.")
+    
+    # ── Verify client assignment ──────────────────────────────────────────────
+    active = await user_repository.is_assignment_active(db, current_user.user_id, req.client_id)
+    if not active:
+        raise HTTPException(403, "You are not authorized to access this request.")
+    
+    # ── Check segregation of duties ───────────────────────────────────────────
+    if req.uploader_id == current_user.user_id:
+        raise HTTPException(403, "Self-approval is not permitted.")
+    
+    # ── Check for active EXCEPTION flags ──────────────────────────────────────
+    if req.status == RequestStatus.EXCEPTION or (req.flags and len(req.flags) > 0):
+        raise HTTPException(
+            409,
+            "Unresolved exceptions must be addressed before this Request can be approved."
+        )
+    
+    # ── Check status is READY_FOR_REVIEW ──────────────────────────────────────
+    if req.status != RequestStatus.READY_FOR_REVIEW:
+        raise HTTPException(
+            409,
+            f"Request must be in READY_FOR_REVIEW status to approve. Current status: {req.status}."
+        )
+    
+    # ── Transition to AMIGA_REVIEWED ──────────────────────────────────────────
+    now = datetime.now(timezone.utc)
+    await request_repository.update_status(db, request_id, RequestStatus.AMIGA_REVIEWED)
+    
+    # ── Log APPROVED event ────────────────────────────────────────────────────
+    await log_event(
+        db,
+        AuditEventType.APPROVED,
+        payload={
+            "request_id": str(request_id),
+            "approved_by": str(current_user.user_id),
+            "approved_at": now.isoformat(),
+        },
+        request_id=request_id,
+        actor_id=current_user.user_id,
+    )
+    
+    # ── Also log STATUS_CHANGED event ─────────────────────────────────────────
+    await log_event(
+        db,
+        AuditEventType.STATUS_CHANGED,
+        payload={
+            "old_status": RequestStatus.READY_FOR_REVIEW.value,
+            "new_status": RequestStatus.AMIGA_REVIEWED.value,
+            "transitioned_at": now.isoformat(),
+            "transitioned_by": str(current_user.user_id),
+        },
+        request_id=request_id,
+        actor_id=current_user.user_id,
+    )
+    
+    await db.commit()
+    return {
+        "request_id": str(request_id),
+        "status": "AMIGA_REVIEWED",
+        "approved_at": now.isoformat(),
+    }
+
+
 @router.post("/{request_id}/dismiss-duplicate", status_code=status.HTTP_200_OK)
 async def dismiss_duplicate(
     request_id: uuid.UUID,

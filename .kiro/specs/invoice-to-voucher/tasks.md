@@ -275,7 +275,7 @@ The backend lives under `backend/` and the frontend under `frontend/`. Infrastru
 
 ### Phase 8: Voucher Generation and Handover
 
-- [ ] 28. Implement Voucher Service — generation
+- [x] 28. Implement Voucher Service — generation
   - [ ] 28.1 Implement `POST /requests/{id}/voucher-pdf` FastAPI router (`Client_PIC` + active `ClientAssignment`): verify `request.status == AMIGA_REVIEWED`; load the active `VoucherTemplate` via `template_service.load_active_template(db)`; build Jinja2 context from approved `HeaderFields`, `LineItems` (with their `TaxAssignment` rows), `PaymentDetails`, `tax_service.compute_tax_summary()` result, and `settings.AUTHORIZATION_DISCLAIMER`; render HTML using `jinja2.Environment(loader=BaseLoader()).from_string(template.template_content).render(context)`; convert to PDF using `weasyprint.HTML(string=rendered_html).write_pdf()`; compute `disclaimer_hash = sha256(disclaimer_text.encode()).hexdigest()` and `template_hash = sha256(rendered_html.encode()).hexdigest()`; upload PDF bytes to S3 at `vouchers/{request_id}/{voucher_pdf_id}.pdf`; persist `VoucherPDF` record with `file_key`, `generated_by`, `generated_at`, `template_version`, `disclaimer_hash`, `template_hash`; write `VOUCHER_GENERATED` AuditEvent; record generation duration in `TelemetryRecord`; SLA is **5 seconds** (updated from 3s); if generation fails return `HTTPException(500)` and do NOT write AuditEvent or transition status
     - _Requirements: 15.1, 15.2, 15.4, 15.5, 15.6, 21.6, 22.3, 22.4, 22.5, 22.7, 22.8, 20.3, 20.6_
   - [ ] 28.2 Enforce status guard: if `request.status != AMIGA_REVIEWED`, return error stating the Request has not completed independent review
@@ -283,7 +283,7 @@ The backend lives under `backend/` and the frontend under `frontend/`. Infrastru
   - [ ]* 28.3 Write pytest tests for PDF generation: non-`AMIGA_REVIEWED` status blocked, generation success creates `VoucherPDF` record + `AuditEvent`, generation failure leaves no `AuditEvent` and no status transition, disclaimer text present in output
     - _Requirements: 15.3, 15.5, 15.6_
 
-- [ ] 29. Implement voucher preview
+- [x] 29. Implement voucher preview
   - [ ] 29.1 Implement `GET /requests/{id}/voucher-preview` FastAPI router (Finance Reviewer or Client_PIC + active `ClientAssignment`): return a Pydantic v2 response schema containing all approved `HeaderFields`, `LineItems`, `PaymentDetails`, and the `AUTHORIZATION_DISCLAIMER` text for the frontend to render as a read-only preview; respond within 3 seconds
     - _Requirements: 14.1, 14.2, 14.3_
   - [ ] 29.2 Build the `VoucherPreview` React component: render all approved fields and the disclaimer in a formatted, read-only layout; show an error message and retry button if the preview endpoint returns an error
@@ -294,7 +294,7 @@ The backend lives under `backend/` and the frontend under `frontend/`. Infrastru
     - **Property 14: Disclaimer Present in All Voucher Outputs**
     - **Validates: Requirements 14.2, 15.2, 15.4**
 
-- [ ] 30. Implement voucher download and SENT_TO_CLIENT transition
+- [x] 30. Implement voucher download and SENT_TO_CLIENT transition
   - [ ] 30.1 Implement `GET /requests/{id}/voucher-pdf` FastAPI router (`Client_PIC` + active `ClientAssignment`): verify `request.status == AMIGA_REVIEWED`; fetch PDF bytes from `S3FileStore`; idempotency check — if no prior `SENT_TO_CLIENT` `AuditEvent` exists, write `VOUCHER_DOWNLOADED` and `STATUS_CHANGED (AMIGA_REVIEWED → SENT_TO_CLIENT)` `AuditEvent`s, then transition Request status to `SENT_TO_CLIENT`; stream PDF bytes using FastAPI `StreamingResponse(content=iter([pdf_bytes]), media_type="application/pdf")`; display `SENT_TO_CLIENT` UTC timestamp on the Request detail screen once recorded
     - _Requirements: 16.1, 16.2, 16.5_
   - [ ] 30.2 Enforce authorization guards: no active `ClientAssignment` → `HTTPException(403)` with no client data; `status != AMIGA_REVIEWED` → error stating voucher not yet available
@@ -305,7 +305,7 @@ The backend lives under `backend/` and the frontend under `frontend/`. Infrastru
     - **Property 15: Download Gated on Status; Exactly One SENT_TO_CLIENT Event**
     - **Validates: Requirements 15.3, 16.1, 16.2, 16.3, 16.4**
 
-- [ ] 31. Checkpoint — Full handover flow: approve a request, generate PDF, download it twice, verify exactly one `SENT_TO_CLIENT` event and `status = SENT_TO_CLIENT`. Ask the user if any questions arise.
+- [x] 31. Checkpoint — Full handover flow: approve a request, generate PDF, download it twice, verify exactly one `SENT_TO_CLIENT` event and `status = SENT_TO_CLIENT`. Ask the user if any questions arise.
 
 ---
 

@@ -791,6 +791,16 @@
         "executionId": "5bf559a1-c98f-4501-b290-fc2a49992357",
         "chatSessionId": "sess_9693bc9f-5272-4b97-87c0-54227d699da8",
         "timestamp": 1791947804934
+      },
+      {
+        "executionId": "4252a1f3-ea14-4d51-8bde-f3b6fb496d50",
+        "chatSessionId": "sess_7508378b-5cab-4b67-92e0-de0a02b4dc70",
+        "timestamp": 1791965982081
+      },
+      {
+        "executionId": "4252a1f3-ea14-4d51-8bde-f3b6fb496d50",
+        "chatSessionId": "sess_7508378b-5cab-4b67-92e0-de0a02b4dc70",
+        "timestamp": 1791966855437
       }
     ],
     "32.1 Implement `GET /requests` FastAPI router with role-based and assignment-based filtering via `Depends(get_current_user)`:": [
@@ -1468,6 +1478,42 @@
         "executionId": "1e282b16-2d39-4a48-a5a9-0ae779031416",
         "chatSessionId": "sess_b5690c74-3188-4e00-a74e-a9084579b25a",
         "timestamp": 1791953590419
+      }
+    ],
+    "28. Implement Voucher Service — generation": [
+      {
+        "executionId": "ad638a48-91f3-43f9-85d9-459a281f1c6a",
+        "chatSessionId": "sess_b79e7c41-14cf-4eab-887f-d2ca67935a9e",
+        "timestamp": 1791962014467
+      },
+      {
+        "executionId": "ad638a48-91f3-43f9-85d9-459a281f1c6a",
+        "chatSessionId": "sess_b79e7c41-14cf-4eab-887f-d2ca67935a9e",
+        "timestamp": 1791964032176
+      }
+    ],
+    "29. Implement voucher preview": [
+      {
+        "executionId": "e3f6ad3f-90f7-42cb-b595-ea6c99828725",
+        "chatSessionId": "sess_d8833503-85bc-4dd9-a4f7-2d40c04baef8",
+        "timestamp": 1791964215685
+      },
+      {
+        "executionId": "e3f6ad3f-90f7-42cb-b595-ea6c99828725",
+        "chatSessionId": "sess_d8833503-85bc-4dd9-a4f7-2d40c04baef8",
+        "timestamp": 1791964856249
+      }
+    ],
+    "30. Implement voucher download and SENT_TO_CLIENT transition": [
+      {
+        "executionId": "4c1ef357-a96c-4829-ac08-e4225ec5b91e",
+        "chatSessionId": "sess_b96c07f1-3cc2-43f8-8041-836b48eec01b",
+        "timestamp": 1791965289658
+      },
+      {
+        "executionId": "4c1ef357-a96c-4829-ac08-e4225ec5b91e",
+        "chatSessionId": "sess_b96c07f1-3cc2-43f8-8041-836b48eec01b",
+        "timestamp": 1791965859664
       }
     ]
   }

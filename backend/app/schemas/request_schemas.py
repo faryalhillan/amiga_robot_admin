@@ -129,3 +129,30 @@ class TelemetryRecordResponse(BaseModel):
     measured_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+class VoucherPreviewResponse(BaseModel):
+    """
+    Voucher preview containing all approved fields and authorization disclaimer.
+    Returned by GET /requests/{id}/voucher-preview.
+
+    Validates: Requirements 14.1, 14.2, 14.3
+    """
+    request_id: uuid.UUID
+    vendor_name: Optional[str] = None
+    invoice_number: Optional[str] = None
+    invoice_date: Optional[str] = None
+    currency: Optional[str] = None
+    subtotal: Optional[str] = None
+    total_amount: Optional[str] = None
+    tax_amount: Optional[str] = None
+    fee_amount: Optional[str] = None
+    rounding_adj: Optional[str] = None
+    line_items: List[LineItemResponse] = []
+    bank_account_number: Optional[str] = None
+    bank_name: Optional[str] = None
+    payment_reference: Optional[str] = None
+    authorization_disclaimer: str
+    generated_at: datetime
+
+    model_config = {"from_attributes": True}
