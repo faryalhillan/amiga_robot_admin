@@ -134,5 +134,19 @@ class RequestRepository:
         )
         await db.flush()
 
+    async def set_rejection_reason(
+        self,
+        db: AsyncSession,
+        request_id: uuid.UUID,
+        reason: str,
+    ) -> None:
+        """Persist the rejection reason for a request."""
+        await db.execute(
+            update(InvoiceRequest)
+            .where(InvoiceRequest.request_id == request_id)
+            .values(rejection_reason=reason, updated_at=datetime.now(timezone.utc))
+        )
+        await db.flush()
+
 
 request_repository = RequestRepository()
