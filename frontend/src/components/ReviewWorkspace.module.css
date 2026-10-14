@@ -1,0 +1,199 @@
+/**
+ * Styles for ReviewWorkspace component.
+ */
+
+.workspace {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #fff;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #333;
+  font-weight: 700;
+}
+
+.lockedBadge {
+  background-color: #dc3545;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.globalError {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 0;
+  padding: 1rem 2rem;
+  color: #721c24;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.closeError {
+  background: none;
+  border: none;
+  color: #721c24;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 1rem;
+}
+
+.closeError:hover {
+  color: #500812;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  flex: 1;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+@media (max-width: 1200px) {
+  .layout {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+
+  .leftPanel {
+    border-bottom: 1px solid #ddd;
+    border-right: none;
+  }
+}
+
+/* Left Panel: PDF Viewer */
+.leftPanel {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ddd;
+  overflow: hidden;
+  background-color: #f0f0f0;
+}
+
+.pdfViewer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  background-color: #f0f0f0;
+}
+
+.pdfFrame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: white;
+}
+
+.pdfPlaceholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #999;
+  text-align: center;
+  padding: 2rem;
+}
+
+.pdfPlaceholder p {
+  margin: 0.5rem 0;
+}
+
+.pdfPlaceholderSmall {
+  font-size: 0.9rem;
+  color: #bbb;
+}
+
+/* Right Panel: Editable Fields */
+.rightPanel {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  background-color: #fff;
+}
+
+.fieldsContainer {
+  padding: 2rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.fieldsContainer h2 {
+  margin: 0 0 2rem 0;
+  font-size: 1.3rem;
+  color: #333;
+  font-weight: 600;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #007bff;
+}
+
+/* Scrollbar Styling */
+.fieldsContainer::-webkit-scrollbar,
+.pdfViewer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.fieldsContainer::-webkit-scrollbar-track,
+.pdfViewer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.fieldsContainer::-webkit-scrollbar-thumb,
+.pdfViewer::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.fieldsContainer::-webkit-scrollbar-thumb:hover,
+.pdfViewer::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .leftPanel {
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+    max-height: 40vh;
+  }
+
+  .fieldsContainer {
+    padding: 1.5rem;
+  }
+
+  .header {
+    padding: 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.3rem;
+  }
+}

@@ -18,6 +18,7 @@ from app.models.invoice_fields import (  # noqa: E402, F401
     PaymentDetails,
 )
 from app.models.request import InvoiceRequest, RequestStatus  # noqa: E402, F401
+from app.models.tax_assignment import TaxAssignment, IndonesianTaxType, TAX_RATES  # noqa: E402, F401
 from app.models.telemetry import MetricType, TelemetryRecord  # noqa: E402, F401
 from app.models.user import User, UserRole  # noqa: E402, F401
 from app.models.voucher import VoucherPDF, VoucherTemplate  # noqa: E402, F401
