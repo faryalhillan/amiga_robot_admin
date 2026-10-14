@@ -1,0 +1,282 @@
+/* ExceptionPanel Component Styles */
+
+.exception-panel {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+}
+
+.exception-panel__header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.exception-panel__title {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #212529;
+  line-height: 1.4;
+}
+
+.exception-panel__subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+.exception-panel__flags-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.exception-panel__flag {
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-left: 4px solid #dc3545;
+  border-radius: 6px;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.exception-panel__flag-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.exception-panel__flag-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.exception-panel__flag-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #dc3545;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.exception-panel__dismiss-button {
+  margin-left: auto;
+  background-color: transparent;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  color: #6c757d;
+  transition: all 0.2s ease;
+}
+
+.exception-panel__dismiss-button:hover {
+  background-color: #fff3cd;
+  border-color: #ff8c00;
+  color: #ff8c00;
+}
+
+.exception-panel__dismiss-button:active {
+  background-color: #ffe699;
+  border-color: #ff8c00;
+}
+
+.exception-panel__content {
+  padding-left: 32px;
+}
+
+.exception-panel__instruction {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #212529;
+  line-height: 1.6;
+}
+
+.exception-panel__list {
+  margin: 0;
+  padding-left: 20px;
+  list-style-type: disc;
+  color: #495057;
+}
+
+.exception-panel__list li {
+  margin-bottom: 6px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #495057;
+}
+
+/* Matching Requests Styles */
+
+.exception-panel__matching-requests {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exception-panel__matching-item {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 13px;
+}
+
+.exception-panel__matching-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.exception-panel__request-id {
+  background-color: #e7e7e7;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #212529;
+}
+
+.exception-panel__matching-detail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.exception-panel__matching-detail:last-child {
+  margin-bottom: 0;
+}
+
+.exception-panel__matching-detail span {
+  font-size: 13px;
+  color: #495057;
+}
+
+/* Calculation Discrepancies Styles */
+
+.exception-panel__discrepancies {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exception-panel__discrepancy-item {
+  background-color: #f8f9fa;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.exception-panel__discrepancy-field {
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #212529;
+}
+
+.exception-panel__discrepancy-comparison {
+  display: flex;
+  gap: 16px;
+}
+
+.exception-panel__value-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.exception-panel__value-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6c757d;
+}
+
+.exception-panel__value-code {
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 3px;
+  padding: 4px 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #212529;
+  word-break: break-all;
+}
+
+/* Approval Notice Styles */
+
+.exception-panel__approval-notice {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  padding: 12px;
+  margin-top: 16px;
+}
+
+.exception-panel__notice-text {
+  margin: 0;
+  font-size: 13px;
+  color: #721c24;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+  .exception-panel {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .exception-panel__title {
+    font-size: 18px;
+  }
+
+  .exception-panel__flag-header {
+    gap: 8px;
+  }
+
+  .exception-panel__discrepancy-comparison {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .exception-panel__dismiss-button {
+    padding: 4px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .exception-panel {
+    padding: 12px;
+  }
+
+  .exception-panel__flag {
+    padding: 12px;
+  }
+
+  .exception-panel__content {
+    padding-left: 24px;
+  }
+
+  .exception-panel__instruction {
+    font-size: 13px;
+  }
+}
