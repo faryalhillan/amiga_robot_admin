@@ -31,7 +31,7 @@ async def load_active_template(db: AsyncSession) -> VoucherTemplate:
 
 async def seed_default_template(db: AsyncSession) -> None:
     """
-    Idempotent: inserts the bundled voucher_default.html as version='v5.0-corporate'
+    Idempotent: inserts the bundled voucher_default.html as version='v6.0-amiga-branded'
     with is_active=True only if no active template already exists.
     """
     result = await db.execute(select(VoucherTemplate).where(VoucherTemplate.is_active.is_(True)))
@@ -39,14 +39,18 @@ async def seed_default_template(db: AsyncSession) -> None:
         # An active template already exists — nothing to do.
         return
 
-    content = _DEFAULT_TEMPLATE_PATH.read_text(encoding="utf-8")
-    template = VoucherTemplate(
-        template_id=uuid.uuid4(),
-        version="v5.0-corporate",
-        template_content=content,
-        is_active=True,
-        created_by=None,
-        created_at=datetime.now(UTC),
-    )
-    db.add(template)
+    template = await db.scalar(select(VoucherTemplate).where(VoucherTemplate.version == "v6.0-amiga-branded"))
+    if template is None:
+        content = _DEFAULT_TEMPLATE_PATH.read_text(encoding="utf-8")
+        template = VoucherTemplate(
+            template_id=uuid.uuid4(),
+            version="v6.0-amiga-branded",
+            template_content=content,
+            is_active=True,
+            created_by=None,
+            created_at=datetime.now(UTC),
+        )
+        db.add(template)
+    else:
+        template.is_active = True
     await db.flush()

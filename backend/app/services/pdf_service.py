@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 
-def render_html_pdf(html: str, renderer=None) -> bytes:
+def render_html_pdf(html: str, renderer=None, base_url=None) -> bytes:
     if renderer is None or not hasattr(renderer, "HTML"):
         if sys.platform == "darwin":
             # ctypes uses this path to locate Homebrew Pango/GLib libraries.
@@ -15,7 +15,9 @@ def render_html_pdf(html: str, renderer=None) -> bytes:
             if paths:
                 os.environ["DYLD_FALLBACK_LIBRARY_PATH"] = ":".join([configured, *paths]).strip(":")
         renderer = importlib.import_module("weasyprint")
-    return renderer.HTML(string=html).write_pdf()
+    if base_url is None:
+        base_url = (Path(__file__).parent.parent / "templates").resolve().as_uri()
+    return renderer.HTML(string=html, base_url=str(base_url)).write_pdf()
 
 
 def add_authorization_footer(pdf_bytes: bytes, notice: str) -> bytes:
